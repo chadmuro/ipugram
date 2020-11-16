@@ -1,6 +1,6 @@
-# Ipugram
+# IpuGram
 
-Ipugram is a photo gallery web app highlighting memories of my French Bulldog.
+IpuGram is a photo gallery web app highlighting memories of my French Bulldog.
 
 ## Created With
 
