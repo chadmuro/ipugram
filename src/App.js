@@ -17,7 +17,6 @@ const App = () => {
 			<Title signupOpen={signupOpen} setSignupOpen={setSignupOpen} loginOpen={loginOpen} setLoginOpen={setLoginOpen} />
 			<UploadForm />
 			<ImageGrid setSelectedImg={setSelectedImg} />
-
 			{selectedImg && (
 				<ModalDisplay
 					selectedImg={selectedImg}

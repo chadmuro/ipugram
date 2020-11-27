@@ -23,7 +23,7 @@ const UploadForm = () => {
 	const [file, setFile] = useState(null);
 	const [error, setError] = useState(null);
 	const classes = useStyles();
-	const { user } = useContext(AuthContext);
+	const { admin } = useContext(AuthContext);
 
 	const types = ['image/png', 'image/jpeg'];
 
@@ -40,7 +40,7 @@ const UploadForm = () => {
 
 	return (
 		<>
-			{user && (
+			{admin && (
 				<form className={classes.button}>
 					<label htmlFor="upload-photo">
 						<input
