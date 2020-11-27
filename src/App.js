@@ -6,15 +6,11 @@ import ImageGrid from './components/ImageGrid';
 import ModalDisplay from './components/Modal';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import { auth } from './firebase/config';
-import { AuthContext } from './contexts/AuthContext';
 
 const App = () => {
 	const [selectedImg, setSelectedImg] = useState(null);
 	const [signupOpen, setSignupOpen] = useState(false);
 	const [loginOpen, setLoginOpen] = useState(false);
-
-	const { user } = useContext(AuthContext);
 
 	return (
 		<Container maxWidth="lg">

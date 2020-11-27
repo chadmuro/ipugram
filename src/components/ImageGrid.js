@@ -43,7 +43,7 @@ const ImageGrid = ({ setSelectedImg }) => {
 	const classes = useStyles();
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-	const { user } = useContext(AuthContext);
+	const { user, admin } = useContext(AuthContext);
 
 	const deleteImage = (doc) => {
 		deleteFromFirestore(doc.id);
@@ -61,7 +61,7 @@ const ImageGrid = ({ setSelectedImg }) => {
 							className={classes.gridImage}
 							onClick={() => setSelectedImg(doc.url)}
 						/>
-						{user && (
+						{admin && (
 							<GridListTileBar
 								className={classes.titleBar}
 								actionIcon={

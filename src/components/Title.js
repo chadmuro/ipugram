@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {
 	Typography,
 	Toolbar,
@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import { authLogout } from '../hooks/useAuth';
 import { AuthContext } from '../contexts/AuthContext';
+import ProfileDialog from './ProfileDialog';
 
 const useStyles = makeStyles({
 	title: {
@@ -23,12 +24,16 @@ const useStyles = makeStyles({
 
 const Title = ({ signupOpen, setSignupOpen, loginOpen, setLoginOpen }) => {
 	const { user } = useContext(AuthContext);
+	const [profileOpen, setProfileOpen] = useState(false);
 	const classes = useStyles();
 
-	const logout = e => {
-		e.preventDefault();
+	const logout = () => {
 		authLogout();
 	};
+
+	const showProfile = () => {
+		setProfileOpen(!profileOpen);
+	}
 
 	return (
 		<>
@@ -38,9 +43,15 @@ const Title = ({ signupOpen, setSignupOpen, loginOpen, setLoginOpen }) => {
 				</Typography>
 
 				{user && (
-					<Button color="primary" variant="outlined" onClick={logout}>
-						Logout
-					</Button>
+					<>
+						<Button color="primary" variant="outlined" onClick={showProfile}>
+							Profile
+						</Button>
+						<ProfileDialog profileOpen={profileOpen} setProfileOpen={setProfileOpen} />
+						<Button color="primary" variant="outlined" onClick={logout}>
+							Logout
+						</Button>
+					</>
 				)}
 				{!user && (
 					<>
