@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import App from './App';
+import AuthProvider from './contexts/AuthContext';
 
 const theme = createMuiTheme({
   palette: {
@@ -18,8 +19,10 @@ const theme = createMuiTheme({
 })
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <App />
-  </ThemeProvider>,
-  document.getElementById('root')
+	<ThemeProvider theme={theme}>
+		<AuthProvider>
+			<App />
+		</AuthProvider>
+	</ThemeProvider>,
+	document.getElementById('root')
 );

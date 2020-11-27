@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Container } from '@material-ui/core';
 import Title from './components/Title';
 import UploadForm from './components/UploadForm';
@@ -7,26 +7,20 @@ import ModalDisplay from './components/Modal';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import { auth } from './firebase/config';
+import { AuthContext } from './contexts/AuthContext';
 
 const App = () => {
 	const [selectedImg, setSelectedImg] = useState(null);
 	const [signupOpen, setSignupOpen] = useState(false);
 	const [loginOpen, setLoginOpen] = useState(false);
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-	auth.onAuthStateChanged((user) => {
-		if (user) {
-			setIsLoggedIn(true);
-		} else {
-			setIsLoggedIn(false);
-		}
-	});
+	const { user } = useContext(AuthContext);
 
 	return (
 		<Container maxWidth="lg">
-			<Title signupOpen={signupOpen} setSignupOpen={setSignupOpen} loginOpen={loginOpen} setLoginOpen={setLoginOpen} isLoggedIn={isLoggedIn}/>
-			<UploadForm isLoggedIn={isLoggedIn} />
-			<ImageGrid setSelectedImg={setSelectedImg} isLoggedIn={isLoggedIn}/>
+			<Title signupOpen={signupOpen} setSignupOpen={setSignupOpen} loginOpen={loginOpen} setLoginOpen={setLoginOpen} />
+			<UploadForm />
+			<ImageGrid setSelectedImg={setSelectedImg} />
 
 			{selectedImg && (
 				<ModalDisplay

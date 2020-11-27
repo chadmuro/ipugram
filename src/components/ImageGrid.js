@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
 	GridList,
 	GridListTile,
@@ -12,6 +12,7 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete';
 import { ReadFirestore, deleteFromFirestore } from '../hooks/useFirestore';
 import { deleteFromStorage } from '../hooks/useStorage';
+import { AuthContext } from '../contexts/AuthContext';
 
 const useStyles = makeStyles({
 	container: {
@@ -37,11 +38,12 @@ const useStyles = makeStyles({
 	}
 });
 
-const ImageGrid = ({ setSelectedImg, isLoggedIn }) => {
+const ImageGrid = ({ setSelectedImg }) => {
 	const { docs } = ReadFirestore('images');
 	const classes = useStyles();
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+	const { user } = useContext(AuthContext);
 
 	const deleteImage = (doc) => {
 		deleteFromFirestore(doc.id);
@@ -59,7 +61,7 @@ const ImageGrid = ({ setSelectedImg, isLoggedIn }) => {
 							className={classes.gridImage}
 							onClick={() => setSelectedImg(doc.url)}
 						/>
-						{isLoggedIn && (
+						{user && (
 							<GridListTileBar
 								className={classes.titleBar}
 								actionIcon={

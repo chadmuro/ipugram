@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Fab, makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import ProgressBar from './ProgressBar';
+import { AuthContext } from '../contexts/AuthContext';
 
 const useStyles = makeStyles({
 	button: {
@@ -18,10 +19,11 @@ const useStyles = makeStyles({
 	},
 });
 
-const UploadForm = ({ isLoggedIn }) => {
+const UploadForm = () => {
 	const [file, setFile] = useState(null);
 	const [error, setError] = useState(null);
 	const classes = useStyles();
+	const { user } = useContext(AuthContext);
 
 	const types = ['image/png', 'image/jpeg'];
 
@@ -38,7 +40,7 @@ const UploadForm = ({ isLoggedIn }) => {
 
 	return (
 		<>
-			{isLoggedIn && (
+			{user && (
 				<form className={classes.button}>
 					<label htmlFor="upload-photo">
 						<input
