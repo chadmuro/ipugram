@@ -83,7 +83,7 @@ const Title = ({ signupOpen, setSignupOpen, loginOpen, setLoginOpen }) => {
 					className={classes.subtitle}
 				>
 					{user
-						? 'Upload and browse your favorite pictures of Ipu'
+						? 'Browse and like your favorite pictures of Ipu. Most liked photos will be featured at the top.'
 						: 'View your favorite pictures of Ipu!'}
 				</Typography>
 			</Container>
