@@ -23,7 +23,7 @@ ReactDOM.render(
 	<ThemeProvider theme={theme}>
 		<AuthProvider>
 			<ImagesProvider>
-				<App />
+					<App />
 			</ImagesProvider>
 		</AuthProvider>
 	</ThemeProvider>,

@@ -7,42 +7,42 @@ import {
 	Avatar,
 	ListItemText,
 	makeStyles,
-    ListItem,
-    TextField,
-    Button
+	ListItem,
+	TextField,
+	Button,
 } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 import { AuthContext } from '../contexts/AuthContext';
 import { functions } from '../firebase/config';
 
 const useStyles = makeStyles({
-    form: {
-        display: 'flex'
-    },
-    formButton: {
-        alignSelf: 'flex-end',
-        marginLeft: '1rem'
-    }
+	form: {
+		display: 'flex',
+	},
+	formButton: {
+		alignSelf: 'flex-end',
+		marginLeft: '1rem',
+	},
 });
 
 const ProfileDialog = ({ profileOpen, setProfileOpen }) => {
-    const { user } = useContext(AuthContext);
-    const [adminEmail, setAdminEmail] = useState('');
-    const classes = useStyles();
+	const { user, admin } = useContext(AuthContext);
+	const [adminEmail, setAdminEmail] = useState('');
+	const classes = useStyles();
 
 	const handleClose = () => {
 		setProfileOpen(!profileOpen);
-    };
-    
-    const addAdmin = (e) => {
-        e.preventDefault();
-        const addAdminRole = functions.httpsCallable('addAdminRole');
-        addAdminRole({ email: adminEmail }).then(result => {
-            console.log(result);
-            setAdminEmail('');
-            setProfileOpen(!setProfileOpen);
-        })
-    }
+	};
+
+	const addAdmin = e => {
+		e.preventDefault();
+		const addAdminRole = functions.httpsCallable('addAdminRole');
+		addAdminRole({ email: adminEmail }).then(result => {
+			console.log(result);
+			setAdminEmail('');
+			setProfileOpen(!setProfileOpen);
+		});
+	};
 
 	return (
 		<Dialog open={profileOpen} onClose={handleClose}>
@@ -56,21 +56,31 @@ const ProfileDialog = ({ profileOpen, setProfileOpen }) => {
 					</ListItemAvatar>
 					<ListItemText primary={user.email} />
 				</ListItem>
-				<ListItem>
-					<ListItemText primary="Admin" />
-				</ListItem>
-				<ListItem>
-					<form onSubmit={addAdmin} className={classes.form}>
-						<TextField
-							label="Email"
-							value={adminEmail}
-							onChange={e => setAdminEmail(e.target.value)}
-						/>
-                        <Button type="submit" size="small" variant="contained" color="primary" className={classes.formButton}>
-							Make Admin
-						</Button>
-					</form>
-				</ListItem>
+				{admin && (
+					<>
+						<ListItem>
+							<ListItemText primary="Admin" />
+						</ListItem>
+						<ListItem>
+							<form onSubmit={addAdmin} className={classes.form}>
+								<TextField
+									label="Email"
+									value={adminEmail}
+									onChange={e => setAdminEmail(e.target.value)}
+								/>
+								<Button
+									type="submit"
+									size="small"
+									variant="contained"
+									color="primary"
+									className={classes.formButton}
+								>
+									Make Admin
+								</Button>
+							</form>
+						</ListItem>
+					</>
+				)}
 			</List>
 		</Dialog>
 	);

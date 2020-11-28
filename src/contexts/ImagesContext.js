@@ -8,7 +8,8 @@ const ImagesProvider = props => {
 
 	useEffect(() => {
 		const unsub = db
-            .collection('images')
+			.collection('images')
+			.orderBy('numLikes', 'desc')
 			.orderBy('createdAt', 'desc')
 			.onSnapshot(snap => {
 				let documents = [];

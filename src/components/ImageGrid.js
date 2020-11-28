@@ -10,10 +10,16 @@ import {
 	useTheme,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import { deleteFromFirestore } from '../hooks/useFirestore';
 import { deleteFromStorage } from '../hooks/useStorage';
 import { AuthContext } from '../contexts/AuthContext';
 import { ImagesContext } from '../contexts/ImagesContext';
+import {
+	GetLikedImages,
+	AddLikedImages,
+	RemoveLikedImages,
+} from '../hooks/useLikedPhotos';
 
 const useStyles = makeStyles({
 	container: {
@@ -29,11 +35,14 @@ const useStyles = makeStyles({
 		cursor: 'pointer',
 	},
 	titleBar: {
-		background: 'none',
-		pointerEvents: 'none',
+		background:
+			'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
 	},
-	deleteButton: {
-		pointerEvents: 'auto',
+	favoriteButton: {
+		color: '#fff',
+	},
+	favoriteButtonLiked: {
+		color: '#f00',
 	},
 });
 
@@ -41,13 +50,14 @@ const ImageGrid = ({ setSelectedImg }) => {
 	const classes = useStyles();
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-	const { user, admin } = useContext(AuthContext);
+	const { user, admin, userId } = useContext(AuthContext);
 	const { images } = useContext(ImagesContext);
+	const { likedImages } = GetLikedImages(userId);
 
-	const deleteImage = doc => {
-		deleteFromFirestore(doc.id);
-		deleteFromStorage(doc.name);
-	};
+	// const deleteImage = doc => {
+	// 	deleteFromFirestore(doc.id);
+	// deleteFromStorage(doc.name);
+	// };
 
 	return (
 		<Container className={classes.container} maxWidth="md">
@@ -63,18 +73,38 @@ const ImageGrid = ({ setSelectedImg }) => {
 							alt="Ipu"
 							onClick={() => setSelectedImg(image.url)}
 						/>
-						{admin && (
-							<GridListTileBar
-								className={classes.titleBar}
-								actionIcon={
-									<IconButton
-										className={classes.deleteButton}
-										onClick={() => deleteImage(image)}
-									>
-										<DeleteIcon color="error" fontSize="large" />
-									</IconButton>
-								}
-							/>
+						{user ? (
+							likedImages && likedImages.includes(image.id) ? (
+								<GridListTileBar
+									titlePosition="top"
+									className={classes.titleBar}
+									actionIcon={
+										<IconButton
+											className={classes.favoriteButtonLiked}
+											onClick={() => RemoveLikedImages(user.uid, image.id)}
+										>
+											<FavoriteIcon fontSize="large" fontSize="inherit" />
+										</IconButton>
+									}
+									actionPosition="left"
+								/>
+							) : (
+								<GridListTileBar
+									titlePosition="top"
+									className={classes.titleBar}
+									actionIcon={
+										<IconButton
+											className={classes.favoriteButton}
+											onClick={() => AddLikedImages(user.uid, image.id)}
+										>
+											<FavoriteIcon fontSize="large" fontSize="inherit" />
+										</IconButton>
+									}
+									actionPosition="left"
+								/>
+							)
+						) : (
+							''
 						)}
 					</GridListTile>
 				))}
