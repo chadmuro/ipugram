@@ -10,63 +10,68 @@ import {
 	useTheme,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { ReadFirestore, deleteFromFirestore } from '../hooks/useFirestore';
+import { deleteFromFirestore } from '../hooks/useFirestore';
 import { deleteFromStorage } from '../hooks/useStorage';
 import { AuthContext } from '../contexts/AuthContext';
+import { ImagesContext } from '../contexts/ImagesContext';
 
 const useStyles = makeStyles({
 	container: {
 		marginTop: '3rem',
 	},
-	gridList: {
+	gridListTile: {
 		minHeight: '250px',
-	},
-	gridImage: {
-		cursor: 'pointer',
 		opacity: '0.8',
+		transition: 'opacity .3s',
 		'&:hover': {
 			opacity: '1',
-			transition: 'opacity .3s',
 		},
+		cursor: 'pointer',
 	},
 	titleBar: {
 		background: 'none',
-		pointerEvents: 'none'
+		pointerEvents: 'none',
 	},
 	deleteButton: {
-		pointerEvents: 'auto'
-	}
+		pointerEvents: 'auto',
+	},
 });
 
 const ImageGrid = ({ setSelectedImg }) => {
-	const { docs } = ReadFirestore('images');
 	const classes = useStyles();
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 	const { user, admin } = useContext(AuthContext);
+	const { images } = useContext(ImagesContext);
 
-	const deleteImage = (doc) => {
+	const deleteImage = doc => {
 		deleteFromFirestore(doc.id);
 		deleteFromStorage(doc.name);
-	}
+	};
 
 	return (
 		<Container className={classes.container} maxWidth="md">
 			<GridList cols={isMobile ? 2 : 3} spacing={10}>
-				{docs.map((doc) => (
-					<GridListTile key={doc.id} cols={1} className={classes.gridList}>
+				{images.map(image => (
+					<GridListTile
+						key={image.id}
+						cols={1}
+						className={classes.gridListTile}
+					>
 						<img
-							src={doc.url}
+							src={image.url}
 							alt="Ipu"
-							className={classes.gridImage}
-							onClick={() => setSelectedImg(doc.url)}
+							onClick={() => setSelectedImg(image.url)}
 						/>
 						{admin && (
 							<GridListTileBar
 								className={classes.titleBar}
 								actionIcon={
-									<IconButton className={classes.deleteButton} onClick={() => deleteImage(doc)}>
-										<DeleteIcon color="error" fontSize="large"/>
+									<IconButton
+										className={classes.deleteButton}
+										onClick={() => deleteImage(image)}
+									>
+										<DeleteIcon color="error" fontSize="large" />
 									</IconButton>
 								}
 							/>
