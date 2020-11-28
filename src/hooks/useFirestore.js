@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { projectFirestore } from '../firebase/config';
+import { db } from '../firebase/config';
 
 export const ReadFirestore = (collection) => {
 	const [docs, setDocs] = useState([]);
 
 	useEffect(() => {
-		const unsub = projectFirestore
+		const unsub = db
 			.collection(collection)
 			.orderBy('createdAt', 'desc')
 			.onSnapshot((snap) => {
@@ -24,7 +24,7 @@ export const ReadFirestore = (collection) => {
 };
 
 export const deleteFromFirestore = (id) => {
-    projectFirestore.collection('images').doc(id).delete().then(() => {
+    db.collection('images').doc(id).delete().then(() => {
         console.log('deleted from database');
     })
 }
