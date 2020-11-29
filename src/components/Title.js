@@ -74,7 +74,7 @@ const Title = ({ signupOpen, setSignupOpen, loginOpen, setLoginOpen }) => {
 			</Toolbar>
 			<Container className={classes.title}>
 				<Typography color="secondary" variant="h3" align="center">
-					Ipu's Pictures
+					IpuGram
 				</Typography>
 				<Typography
 					color="secondary"
@@ -83,8 +83,8 @@ const Title = ({ signupOpen, setSignupOpen, loginOpen, setLoginOpen }) => {
 					className={classes.subtitle}
 				>
 					{user
-						? 'Browse and like your favorite pictures of Ipu. Most liked photos will be featured at the top.'
-						: 'View your favorite pictures of Ipu!'}
+						? 'Browse and like your favorite photos of Ipu. Most liked photos will be featured at the top.'
+						: 'Login or sign up to like your favorite photos!'}
 				</Typography>
 			</Container>
 		</>
