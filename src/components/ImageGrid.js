@@ -74,6 +74,13 @@ const ImageGrid = ({ setSelectedImg }) => {
 		deleteFromStorage(doc.name);
 	};
 
+	const handleImageClick = (url, index) => {
+		setSelectedImg({
+			url,
+			index
+		})
+	}
+
 	return (
 		<Container className={classes.container} maxWidth="md">
 			{admin && (
@@ -90,7 +97,7 @@ const ImageGrid = ({ setSelectedImg }) => {
 			)}
 
 			<GridList cols={isMobile ? 2 : 3} spacing={10}>
-				{images.map(image => (
+				{images.map((image, index) => (
 					<GridListTile
 						key={image.id}
 						cols={1}
@@ -99,7 +106,7 @@ const ImageGrid = ({ setSelectedImg }) => {
 						<img
 							src={image.url}
 							alt={image.name}
-							onClick={() => setSelectedImg(image.url)}
+							onClick={() => handleImageClick(image.url, index)}
 						/>
 						{user ? (
 							likedImages && likedImages.includes(image.id) ? (

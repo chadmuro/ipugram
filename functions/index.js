@@ -28,7 +28,7 @@ exports.addAdminRole = functions.https.onCall((data, context) => {
 // auth trigger to create user in firestore on signup
 exports.newUserSignup = functions.auth.user().onCreate(user => {
 	return admin.firestore().collection('users').doc(user.uid).set({
-		likedPhotos: [],
+		likedImages: [],
 	});
 });
 
