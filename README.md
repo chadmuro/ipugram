@@ -1,4 +1,4 @@
-# IpuGram
+# IpuGram :camera:
 
 IpuGram is a photo gallery web app highlighting memories of my French Bulldog.
 
@@ -7,12 +7,11 @@ IpuGram is a photo gallery web app highlighting memories of my French Bulldog.
 - React
   - Hooks
   - Context API
-- Material UI
+- Material-UI
 - Firebase
   - Firestore
   - Authentication
   - Cloud Functions
 
 ## View the Application
-
 https://ipugram.web.app/
