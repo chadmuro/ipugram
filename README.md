@@ -1,17 +1,14 @@
 # IpuGram :camera:
 
-IpuGram is a photo gallery web app highlighting memories of my French Bulldog.
+Instead of creating an InstaGram account for my dog, I decided to build him his own app. IpuGram is a photo gallery web app highlighting memories of my French Bulldog. I created this app with React Hooks and Context API. The styling is done with Material-UI and the backend is handled through Firebase. In Firebase, I created an admin account for myself to handle uploading and deleting photos. Authenticated users can like photos, and photos are ordered by most liked photo.
 
-## Created With
+![Ipugram preview](/img/ipugram-preview.png)
 
-- React
-  - Hooks
-  - Context API
-- Material-UI
-- Firebase
-  - Firestore
-  - Authentication
-  - Cloud Functions
+## Tech Stack
 
-## View the Application
+- React - Hooks, Context API
+- Material-UI - GridImageLayout
+- Firebase - Firestore, Authentication, Cloud Functions
+
+## Use App
 https://ipugram.web.app/
